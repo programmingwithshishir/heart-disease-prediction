@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -10,6 +11,7 @@ const loginSchema = z.object({
 
 export default function SignupPage() {
   const [userType, setUserType] = useState("doctor");
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -21,8 +23,9 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-pink-200">
-      <div className="bg-white p-8 mx-5 shadow-2xl rounded-2xl w-96 transition-all duration-300 ease-in-out transform">
+    <div className="flex flex-col justify-center items-center h-screen bg-pink-200">
+        <h1 className="text-2xl font-bold text-gray-700 mb-4">Welcome to the SignUp Page</h1>
+      <div className="bg-white py-8 px-4 mx-8 shadow-2xl rounded-2xl w-96 transition-all duration-300 ease-in-out transform">
         <div className="flex mb-6 bg-gray-200 p-1 rounded-lg">
           <button
             className={`flex-1 cursor-pointer py-2 text-sm font-semibold text-center rounded-lg transition-all duration-300 ${userType === "doctor" ? "bg-pink-400 text-black shadow-md" : "text-gray-500 hover:bg-gray-300"}`}
@@ -69,8 +72,10 @@ export default function SignupPage() {
 
         <div className="mt-4 text-center">
           <p className="text-gray-600 text-sm">Already have an account?</p>
-          <button className="text-blue-500 hover:underline text-sm mt-1">
-            Log In as {userType.charAt(0).toUpperCase() + userType.slice(1)}
+          <button 
+            onClick={() => navigate("/login")}
+            className="text-blue-500 hover:underline text-sm mt-1">
+            Log In
           </button>
         </div>
       </div>
