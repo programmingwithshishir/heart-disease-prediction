@@ -8,7 +8,7 @@ const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export default function LoginForm() {
+export default function LoginPage() {
   const [userType, setUserType] = useState("doctor");
   const {
     register,
@@ -28,13 +28,13 @@ export default function LoginForm() {
             className={`flex-1 cursor-pointer py-2 text-sm font-semibold text-center rounded-lg transition-all duration-300 ${userType === "doctor" ? "bg-pink-400 text-black shadow-md" : "text-gray-500 hover:bg-gray-300"}`}
             onClick={() => setUserType("doctor")}
           >
-            Doctor Login
+            Doctor
           </button>
           <button
             className={`flex-1 cursor-pointer py-2 text-sm font-semibold text-center rounded-lg transition-all duration-300 ${userType === "patient" ? "bg-pink-400 text-black shadow-md" : "text-gray-500 hover:bg-gray-300"}`}
             onClick={() => setUserType("patient")}
           >
-            Patient Login
+            Patient
           </button>
         </div>
 
@@ -44,7 +44,7 @@ export default function LoginForm() {
             <input
               type="email"
               {...register("email")}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-400 focus:outline-none shadow-sm transition-all duration-200"
+              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-pink-400 focus:outline-none shadow-sm transition-all duration-200"
             />
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
@@ -54,7 +54,7 @@ export default function LoginForm() {
             <input
               type="password"
               {...register("password")}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-400 focus:outline-none shadow-sm transition-all duration-200"
+              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-pink-400 focus:outline-none shadow-sm transition-all duration-200"
             />
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
