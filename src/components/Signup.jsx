@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -18,8 +20,15 @@ export default function SignupPage() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = (data) => {
-    console.log(`${userType} login:`, data);
+  const onSubmit = async () => {
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User signed up:", userCredential.user);
+    } catch (error) {
+      console.error("Sign-up error:", error.message);
+    }
   };
 
   return (
@@ -48,6 +57,7 @@ export default function SignupPage() {
               type="email"
               {...register("email")}
               className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-pink-400 focus:outline-none shadow-sm transition-all duration-200"
+              id="email"
             />
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
@@ -58,6 +68,7 @@ export default function SignupPage() {
               type="password"
               {...register("password")}
               className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-pink-400 focus:outline-none shadow-sm transition-all duration-200"
+              id="password"
             />
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
